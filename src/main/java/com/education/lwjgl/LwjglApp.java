@@ -6,6 +6,7 @@ import com.education.lwjgl.renderer.SurfaceRenderer;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
@@ -24,6 +25,10 @@ public class LwjglApp {
 
     private long lastFrameTime; // for calculating delta
 
+    private float scaleX = 1.0f;
+    private float scaleY = 1.0f;
+    private float scaleZ = 1.0f;
+
     public LwjglApp(final SurfaceRenderer surfaceRenderer) {
         this.surfaceRenderer = surfaceRenderer;
     }
@@ -35,6 +40,7 @@ public class LwjglApp {
 
         while (!closeRequested) {
             pollInput();
+            pollMouse();
             surfaceRenderer.updateLogic(getDelta());
             surfaceRenderer.renderGl();
             Display.update();
@@ -86,6 +92,44 @@ public class LwjglApp {
         }
         if (Display.isCloseRequested()) {
             closeRequested = true;
+        }
+    }
+
+    /**
+     * Changes the surface scale and TriangleAngle depending on mouse actions
+     */
+    private void pollMouse() {
+        while(Mouse.next()) {
+
+            if(Mouse.getEventButtonState()) {
+
+                // left button pressed
+                if(Mouse.getEventButton() == 0 ) {
+                    surfaceRenderer.changeTriangleAngle(-15.0f);
+                }
+
+                // right button pressed
+                if(Mouse.getEventButton() == 1) {
+                    surfaceRenderer.changeTriangleAngle(15.0f);
+                }
+                // scroll wheel button pressed - Mouse.getEventButton() == 2
+            }
+            if (Mouse.hasWheel()) {
+                int intMouseMovement = Mouse.getDWheel() ;
+
+                float scaleStep = 0.1f;
+
+                // mousewheel has been scrolled up
+                if(intMouseMovement > 0) {
+                    surfaceRenderer.changeScale(scaleStep);
+                }
+                // mousewheel has been scrolled down
+                if(intMouseMovement < 0) {
+                    if (surfaceRenderer.isScalable(scaleStep)) {
+                        surfaceRenderer.changeScale(-scaleStep);
+                    }
+                }
+            }
         }
     }
 
