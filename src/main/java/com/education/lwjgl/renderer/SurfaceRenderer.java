@@ -16,4 +16,18 @@ public interface SurfaceRenderer {
      */
     void updateLogic(int delta);
 
+    /**
+     * Changes angle of rotation for the triangles
+     * @param delta
+     */
+    void changeTriangleAngle(float delta);
+
+    /**
+     * Changes parameter for scaling for the triangles
+     * @param delta
+     */
+    void changeScale(float delta);
+
+    boolean isScalable(float scaleStep);
+
 }

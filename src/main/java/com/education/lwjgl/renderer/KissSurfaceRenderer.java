@@ -13,6 +13,8 @@ public class KissSurfaceRenderer implements SurfaceRenderer {
 
     private float triangleAngle; // angle of rotation for the triangles
 
+    private float scale = 1F;
+
     public KissSurfaceRenderer(final Surface surface) {
         this.surface = surface;
     }
@@ -25,7 +27,7 @@ public class KissSurfaceRenderer implements SurfaceRenderer {
         GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
         GL11.glTranslatef(0.0f, 0.0f, -6.0f);
         GL11.glRotatef(triangleAngle, 2.0f, 2.0f, 2.0f); // rotate the surface on it's X, Y, Z axis
-
+        GL11.glScalef(scale, scale, scale);
         GL11.glBegin(GL11.GL_TRIANGLES);
         for (double u = 0; u < 2 * Math.PI; u += step) {
             for (double z = -1; z < 1; z += step) {
@@ -37,7 +39,19 @@ public class KissSurfaceRenderer implements SurfaceRenderer {
         GL11.glEnd();
     }
 
-    public void updateLogic(int delta) {
+    public void updateLogic(final int delta) {
         triangleAngle += 0.1f * delta;
+    }
+
+    public void changeTriangleAngle(final float delta) {
+        triangleAngle += delta;
+    }
+
+    public void changeScale(final float delta) {
+        scale += delta;
+    }
+
+    public boolean isScalable(final float scaleStep) {
+        return (scale - scaleStep != 0.0f);
     }
 }
