@@ -1,5 +1,6 @@
 package com.education.lwjgl.config;
 
+import com.education.lwjgl.app.AccelerometerApp;
 import com.education.lwjgl.app.LwjglApp;
 import com.education.lwjgl.app.OpenCvApp;
 import com.education.lwjgl.renderer.KissSurfaceRenderer;
@@ -34,5 +35,10 @@ public class AppConfig {
     @Bean
     public OpenCvApp openCvApp() {
         return new OpenCvApp(surface());
+    }
+
+    @Bean
+    public AccelerometerApp accelerometerApp() {
+        return new AccelerometerApp(surface());
     }
 }
