@@ -1,7 +1,7 @@
 # lwjgl-project
 Rendering analytical surface using LWJGL library.
 Include 4 practical assignments.
-##Practical assignment 1
+## Practical assignment 1
 Render analytical surface as per individual variant using OpenGL API.
 ## Practical assignment 2
 Add user interaction to the software from assignment 1 by using mouse manipulator:
